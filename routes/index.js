@@ -42,7 +42,7 @@ router.use(auth);
 router.use('/articles', routerArticle);
 router.use('/users', routerUsers);
 
-router.use('*', (req, res) => {
+router.use('*', () => {
   throw new NotFoundError(messegNotFoundError);
 });
 
