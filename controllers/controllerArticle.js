@@ -1,7 +1,7 @@
 const Article = require('../models/article');
 const NotFoundError = require('../errors/not_found_error');
 const Forbidden = require('../errors/forbidden');
-const { messegForbidden, messegNotFoundErrorID } = require('../variables/variables');
+const { messegForbidden, messegNotFoundErrorID, messegNotContainID } = require('../variables/variables');
 
 function getArticles(req, res, next) {
   Article.find({ owner: req.user })
@@ -17,7 +17,7 @@ function postArticle(req, res, next) {
   Article.create({
     keyword, title, text, date, source, link, image, owner: req.user._id,
   })
-    .then((article) => res.send({ article }))
+    .then((article) => res.status(201).send({ article }))
     .catch(next);
 }
 
@@ -37,7 +37,7 @@ function deleteArticle(req, res, next) {
     })
     .catch((err) => {
       if (err.message.indexOf('Cast to ObjectId failed for value') === 0 || err.message.indexOf('Cannot read property') === 0) {
-        throw new NotFoundError(messegNotFoundErrorID);
+        throw new NotFoundError(messegNotContainID);
       }
       next(err);
     })

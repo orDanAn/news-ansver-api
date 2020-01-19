@@ -16,10 +16,11 @@ const { messegNotFoundError } = require('../variables/variables');
 const { apiLimiter } = require('../config/rateLimiter/rateLimiter');
 const { celebrateSignin, celebrateSignup } = require('../config/celebrate/celebrate');
 
+router.use(apiLimiter);
 
-router.post('/signin', apiLimiter, celebrate(celebrateSignin), signin);
+router.post('/signin', celebrate(celebrateSignin), signin);
 
-router.post('/signup', apiLimiter, celebrate(celebrateSignup), createUser);
+router.post('/signup', celebrate(celebrateSignup), createUser);
 
 router.use(auth);
 

@@ -1,3 +1,5 @@
+const { messegErrorServer } = require('../variables/variables');
+
 module.exports = (err, req, res, next) => {
   const { statusCode = 500, message } = err;
 
@@ -5,7 +7,7 @@ module.exports = (err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === 500
-        ? 'На сервере произошла ошибка'
+        ? messegErrorServer
         : message,
     });
   next();
