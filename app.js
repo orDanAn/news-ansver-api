@@ -12,6 +12,8 @@ const helmet = require('helmet');
 
 const { errors } = require('celebrate');
 
+const cors = require('./middlewares/cors');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const error = require('./middlewares/error');
@@ -26,6 +28,7 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
+app.use(cors);
 
 app.use(cookieParser());
 app.use(bodyParser.json());
