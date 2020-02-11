@@ -14,6 +14,8 @@ const { errors } = require('celebrate');
 
 const cors = require('cors');
 
+const { corsOptions } = require('./config/cors/cors');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const error = require('./middlewares/error');
@@ -28,7 +30,9 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(cors());
+
+app.use(cors(corsOptions));
+app.options('*', cors());
 
 app.use(cookieParser());
 app.use(bodyParser.json());

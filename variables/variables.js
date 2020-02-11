@@ -5,6 +5,8 @@ const messegUnauthorized = 'Необходима авторизация!!!';
 const messegNotPassword = 'Неправильные почта или пароль';
 const messegErrorServer = 'На сервере произошла ошибка';
 const messegNotContainID = 'карточки с таким id нет в базе';
+const messagLogout = 'До скорой встречи';
+const whitelist = ['http://localhost:8080', 'https://www.api.news-ansver.site'];
 
 
 module.exports = {
@@ -15,4 +17,6 @@ module.exports = {
   messegNotPassword,
   messegErrorServer,
   messegNotContainID,
+  whitelist,
+  messagLogout,
 };

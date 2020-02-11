@@ -6,7 +6,7 @@ const Unauthorized = require('../errors/unauthorized_error');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const { jwtSecret } = require('../config/config');
-const { messegNotFoundErrorID } = require('../variables/variables');
+const { messegNotFoundErrorID, messegUnauthorized, messagLogout } = require('../variables/variables');
 
 function aboutUser(req, res, next) {
   const { _id } = req.user;
@@ -41,8 +41,7 @@ function signin(req, res, next) {
         .cookie('jwt', token, {
           httpOnly: true,
           sameSite: true,
-        })
-        .end();
+        }).json({ message: 'authorized!', token });
     })
     .catch((err) => {
       // ошибка аутентификации
@@ -51,7 +50,16 @@ function signin(req, res, next) {
     .catch(next);
 }
 
+function logout(req, res, next) {
+  try {
+    res.clearCookie('jwt', { path: '/' });
+  } catch (e) {
+    const err = new Unauthorized(messegUnauthorized);
+    next(err);
+  }
+  return res.status(200).send(messagLogout);
+}
 
 module.exports = {
-  aboutUser, createUser, signin,
+  aboutUser, createUser, signin, logout,
 };
