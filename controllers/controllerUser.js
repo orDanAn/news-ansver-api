@@ -6,7 +6,9 @@ const Unauthorized = require('../errors/unauthorized_error');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const { jwtSecret } = require('../config/config');
-const { messegNotFoundErrorID, messegUnauthorized, messagLogout } = require('../variables/variables');
+const {
+  messegNotFoundErrorID, messegUnauthorized, messagLogout, duplicateUser,
+} = require('../variables/variables');
 
 function aboutUser(req, res, next) {
   const { _id } = req.user;
@@ -28,6 +30,11 @@ function createUser(req, res, next) {
       name: req.body.name,
     }))
     .then((user) => res.status(201).send({ email: user.email, name: user.name }))
+    .catch((err) => {
+      if (err.message.indexOf('E11000 duplicate key') === 0) {
+        throw new Unauthorized(duplicateUser);
+      }
+    })
     .catch(next);
 }
 
@@ -57,7 +64,7 @@ function logout(req, res, next) {
     const err = new Unauthorized(messegUnauthorized);
     next(err);
   }
-  return res.status(200).send(messagLogout);
+  return res.status(200).json(messagLogout);
 }
 
 module.exports = {
