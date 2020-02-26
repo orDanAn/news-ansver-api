@@ -47,7 +47,7 @@ function signin(req, res, next) {
       res
         .cookie('jwt', token, {
           httpOnly: true,
-          sameSite: true,
+          // sameSite: true,
         }).json({ message: 'authorized!', token });
     })
     .catch((err) => {
