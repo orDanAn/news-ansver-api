@@ -7,7 +7,7 @@ const messegErrorServer = 'На сервере произошла ошибка';
 const messegNotContainID = 'карточки с таким id нет в базе';
 const messagLogout = 'До скорой встречи';
 const duplicateUser = 'такой пользователь уже есть';
-const whitelist = ['http://localhost:8080', 'https://www.api.news-ansver.site', 'https://ordanan.github.io'];
+const whitelist = ['http://localhost:8080', 'https://www.news-ansver.site', 'https://ordanan.github.io'];
 
 
 module.exports = {
